@@ -21,7 +21,7 @@ __pycache__/
 *.db
 *.sqlite
 *.sqlite3
-app.db
+backen/app.db
 
 # --- Variables de entorno y credenciales sensibles ---
 .env

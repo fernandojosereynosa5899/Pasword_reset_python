@@ -1,6 +1,5 @@
-import models
-from main import SessionLocal
-
+from backen import models
+from backen.main import SessionLocal
 
 def view_database():
     db = SessionLocal()
