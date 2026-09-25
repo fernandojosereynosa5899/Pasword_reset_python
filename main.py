@@ -70,7 +70,10 @@ def reset_password(request: PasswordResetConfirm, db: Session = Depends(get_db))
     if db_token.used:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="El enlace ya fue utilizado")
 
-    if datetime.now(timezone.utc) > db_token.expires_at:
+    # Le devolvemos la zona horaria UTC a la fecha recuperada de SQLite
+    expires_at_aware = db_token.expires_at.replace(tzinfo=timezone.utc)
+
+    if datetime.now(timezone.utc) > expires_at_aware:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="El enlace ha expirado")
 
     user = db.query(models.User).filter(models.User.email == db_token.user_email).first()
